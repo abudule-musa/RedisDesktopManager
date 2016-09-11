@@ -68,9 +68,20 @@ void Application::initAppInfo()
 
 void Application::initAppFonts()
 {
-    QFontDatabase::addApplicationFont("://fonts/OpenSans-Regular.ttc");
-    QFont defaultFont("OpenSans", 11);
-    QApplication::setFont(defaultFont);
+    auto lang = QLocale::system().language();
+
+    if (lang == QLocale::Language::Chinese
+            || lang == QLocale::Language::Japanese
+            || lang == QLocale::Language::Korean) {
+        QFontDatabase::addApplicationFont("://fonts/NotoSansCJK-Regular.ttc");
+        QFontDatabase::addApplicationFont("://fonts/NotoSansCJK-Bold.ttc");
+        QFont defaultFont("NotoSansCJK", 11);
+        QApplication::setFont(defaultFont);
+    } else {
+        QFontDatabase::addApplicationFont("://fonts/OpenSans.ttc");
+        QFont defaultFont("OpenSans", 11);
+        QApplication::setFont(defaultFont);
+    }
 }
 
 void Application::initAppAnalytics()
